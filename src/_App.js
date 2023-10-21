@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 export default function App() {
-  return <Counter />;
+  return (
+    <Counter />
+  );
 }
 
 function Counter() {
-  // 1. Create a new state variable
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
 
@@ -24,19 +25,16 @@ function Counter() {
     setCount((prevCount) => prevCount + step);
   }
 
-  function handleStep(event) {
-    setStep(Number(event.target.value));
-  }
-
-  function handleCount(event) {
-    if (event.target.value === "") {
-      setCount(0);
-    } else {
-      setCount(Number(event.target.value));
+  function handleStepDecrease() {
+    if (step > 1) {
+      setStep((prevStep) => prevStep - 1);
     }
   }
 
-  // Reset the state after form submission. This will allow React to automatically keep this state in sync with these form elements.
+  function handleStepIncrease() {
+    setStep((prevStep) => prevStep + 1);
+  }
+
   function handleReset() {
     setCount(0);
     setStep(1);
@@ -45,29 +43,30 @@ function Counter() {
   function displayDate() {
     if (count === 0) {
       return "Today is ";
-    } else if (count >= 1) {
+    } 
+
+    else if (count >= 1) {
       return `${count} days from today is `;
-    } else {
+    }
+    
+    else {
       return `${count} days ago was `;
     }
   }
 
+  
+
   return (
     <div>
-      <div>
-        <input
-          type="range"
-          min="0"
-          max="10"
-          value={step}
-          onChange={handleStep}
-        />
+      <div>zz
+        <button onClick={handleStepDecrease}>-</button>
         <span>Step: {step}</span>
+        <button onClick={handleStepIncrease}>+</button>
       </div>
 
       <div>
         <button onClick={handleDecrease}>-</button>
-        <input type="text" value={count} onChange={handleCount} />
+        <span>Count: {count}</span>
         <button onClick={handleIncrease}>+</button>
       </div>
 
@@ -76,11 +75,9 @@ function Counter() {
         <span>{date.toLocaleDateString()}</span>
       </div>
 
-      {count !== 0 || step !== 1 ? (
-        <div className="reset-button">
-          <button onClick={handleReset}>Reset</button>
-        </div>
-      ) : null}
+      <div className="reset-button">
+        <button onClick={handleReset}>Reset</button>
+      </div>
     </div>
   );
 }
